@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Tab</title>
+  <style>
+
+    .tab {
+      margin-top: 20px;
+    }
+
+    .tab > ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .tab > .tab-bar {
+      display: flex;
+      border-bottom: 1px solid seagreen;
+      width: 600px;
+    }
+
+    .tab > .tab-bar > li {
+      padding: 8px 16px;
+      border: 1px solid transparent;
+      border-bottom: none;
+    }
+
+    .tab > .tab-bar > li:hover {
+      border-color: salmon;
+    }
+
+    .tab > .tab-bar > li.active {
+      border-color: salmon;
+    }
+
+    .tab > .tab-content > li {
+      display: none;
+    }
+
+    .tab > .tab-content > li.active {
+      display: block;
+    }
+
+  </style>
+</head>
+<body>
+<div class="tab">
+  <ol class="tab-bar">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ol>
+
+  <ol class="tab-content">
+    <li>content1</li>
+    <li>content2</li>
+    <li>content3</li>
+  </ol>
+</div>
+
+<div class="tab xxx">
+  <ol class="tab-bar">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ol>
+
+  <ol class="tab-content">
+    <li>content1</li>
+    <li>content2</li>
+    <li>content3</li>
+  </ol>
+</div>
+
+<div class="tab xxx">
+  <ol class="tab-bar">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ol>
+
+  <ol class="tab-content">
+    <li>content1</li>
+    <li>content2</li>
+    <li>content3</li>
+  </ol>
+</div>
+</body>
+<script>
+  // // init
+  // $('.tab').each(function (index, element) {
+  //   $(element).children('.tab-bar').children('li').eq(0).addClass('active')
+  //   $(element).children('.tab-content').children('li').eq(0).addClass('active')
+  // })
+  //
+  // $('.tab').on('click', '.tab-bar > li', function (e) {
+  //   // tab-bar
+  //   let $li = $(e.currentTarget);   // e.currentTarget === this
+  //   $li.addClass('active').siblings().removeClass('active')
+  //
+  //   // tab-content
+  //   let index = $li.index()
+  //   let $content = $li.closest('.tab').find('.tab-content > li').eq(index)
+  //   $content.addClass('active').siblings().removeClass('active')
+  // })
+
+
+
+  // // 原型的写法
+  // function Tabs(selector) {
+  //   this.element = $(selector)
+  //   this.init()
+  //   this.bindEvents()
+  //
+  // }
+  //
+  // Tabs.prototype.init = function(){
+  //   this.element.each(function (index, element) {
+  //     $(element).children('.tab-bar').children('li').eq(0).addClass('active')
+  //     $(element).children('.tab-content').children('li').eq(0).addClass('active')
+  //   })
+  // }
+  //
+  // Tabs.prototype.bindEvents = function(){
+  //   this.element.on('click', '.tab-bar > li', function (e) {
+  //     // tab-bar
+  //     let $li = $(e.currentTarget);   // e.currentTarget === this
+  //     $li.addClass('active').siblings().removeClass('active')
+  //
+  //     // tab-content
+  //     let index = $li.index()
+  //     let $content = $li.closest('.tab').find('.tab-content > li').eq(index)
+  //     $content.addClass('active').siblings().removeClass('active')
+  //   })
+  // }
+
+  // class
+  class Tabs {
+    constructor(selector){
+      this.element = $(selector)
+      this.init()
+      this.bind()
+    }
+    init(){
+      this.element.each(function(index, element){
+        $(element).children('.tab-bar').children('li').eq(0).addClass('active')
+        $(element).children('.tab-content').children('li').eq(0).addClass('active')
+      })
+    }
+    bind(){
+      this.element.on('click', '.tab-bar > li', function(e){
+        let $li = $(e.currentTarget)
+        $li.addClass('active').siblings().removeClass('active')
+        let index = $li.index()
+        let $content = $li.closest('.tab').find('.tab-content > li').eq(index)
+        $content.addClass('active').siblings().removeClass('active')
+      })
+    }
+  }
+
+  let tabs = new Tabs('.xxx')
+</script>
+</html>
